@@ -10,7 +10,7 @@ export default defineConfig({
       spa: {
         prerender: {
           outputPath: "/index.html",
-          crawlLinks: false,
+          crawlLinks: false, 
         },
       },
     }),
