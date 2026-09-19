@@ -30,14 +30,23 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check build output
+        run: |
+          echo "=== ROOT ==="
+          ls -la
+          echo "=== DIST ==="
+          find dist -maxdepth 3 -type f 2>/dev/null || true
+          echo "=== OUTPUT ==="
+          find .output -maxdepth 4 -type f 2>/dev/null || true
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload build
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.output/public
-
+          path: ./dist
+    
   deploy:
     needs: build
     runs-on: ubuntu-latest
