@@ -108,14 +108,29 @@ function Index() {
   }, []);
 
   return (
-    <main className="h-screen w-screen">
-      <h1 className="sr-only">Yatra Sahayak travel companion</h1>
-      <iframe
-        title="Yatra Sahayak travel companion"
-        src="./yatra.html"
-        className="h-full w-full border-0"
-        allow="geolocation *; clipboard-write"
-      />
-    </main>
-  );
-}
+  <main
+    style={{
+      position: "fixed",
+      inset: 0,
+      width: "100vw",
+      height: "100vh",
+      margin: 0,
+      padding: 0,
+      overflow: "hidden",
+    }}
+  >
+    <h1 style={{ display: "none" }}>Yatra Sahayak travel companion</h1>
+
+    <iframe
+      title="Yatra Sahayak travel companion"
+      src="./yatra.html"
+      style={{
+        display: "block",
+        width: "100%",
+        height: "100%",
+        border: "none",
+      }}
+      allow="geolocation *; clipboard-write"
+    />
+  </main>
+);
