@@ -112,7 +112,7 @@ function Index() {
       <h1 className="sr-only">Yatra Sahayak travel companion</h1>
       <iframe
         title="Yatra Sahayak travel companion"
-        src="/yatra.html"
+        src="./yatra.html"
         className="h-full w-full border-0"
         allow="geolocation *; clipboard-write"
       />
