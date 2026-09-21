@@ -30,14 +30,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Fix GitHub Pages paths
+        run: |
+          sed -i 's#="/assets/#="./assets/#g' dist/client/index.html
+          sed -i "s#'/assets/#'./assets/#g" dist/client/index.html
+
       - name: Check build output
         run: |
-          echo "=== ROOT ==="
-          ls -la
           echo "=== DIST ==="
-          find dist -maxdepth 3 -type f 2>/dev/null || true
-          echo "=== OUTPUT ==="
-          find .output -maxdepth 4 -type f 2>/dev/null || true
+          find dist/client -maxdepth 3 -type f
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -45,8 +46,8 @@ jobs:
       - name: Upload build
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.output/public
-    
+          path: ./dist/client
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
