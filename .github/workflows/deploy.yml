@@ -45,7 +45,7 @@ jobs:
       - name: Upload build
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/client
+          path: ./.output/public
     
   deploy:
     needs: build
