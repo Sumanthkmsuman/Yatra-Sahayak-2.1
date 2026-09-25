@@ -7,6 +7,7 @@ export const getRouter = () => {
 
   const router = createRouter({
     routeTree,
+    basepath: "/Yatra-Sahayak-2.1",
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
