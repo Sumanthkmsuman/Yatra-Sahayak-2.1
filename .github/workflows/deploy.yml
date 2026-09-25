@@ -30,23 +30,31 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Fix GitHub Pages paths
+      - name: Prepare GitHub Pages site
         run: |
-          sed -i 's#="/assets/#="./assets/#g' .output/public/index.html
-          sed -i "s#'/assets/#'./assets/#g" .output/public/index.html
+          rm -rf site
+          mkdir -p site
+          cp -R .output/public/. site/
 
-      - name: Check build output
+          echo "=== SITE ROOT ==="
+          ls -la site
+
+          echo "=== INDEX CHECK ==="
+          test -f site/index.html
+          echo "index.html exists"
+
+      - name: Fix GitHub Pages asset paths
         run: |
-          echo "=== PUBLIC FILES ==="
-          find .output/public -maxdepth 4 -type f
+          sed -i 's#="/assets/#="./assets/#g' site/index.html
+          sed -i "s#'/assets/#'./assets/#g" site/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload build
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: ./.output/public
+          path: ./site
 
   deploy:
     needs: build
@@ -57,6 +65,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
