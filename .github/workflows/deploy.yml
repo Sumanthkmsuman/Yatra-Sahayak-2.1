@@ -30,25 +30,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Fix GitHub Pages paths
+        run: |
+          sed -i 's#="/assets/#="./assets/#g' .output/public/index.html
+          sed -i "s#'/assets/#'./assets/#g" .output/public/index.html
+
       - name: Check build output
         run: |
-          echo "===================="
-          echo "ALL INDEX FILES"
-          echo "===================="
-          find . -type f -name "index.html" \
-            -not -path "./node_modules/*" \
-            -not -path "./.git/*" \
-            -print
-
-          echo "===================="
-          echo "DIST FILES"
-          echo "===================="
-          find dist -maxdepth 5 -type f 2>/dev/null || true
-
-          echo "===================="
-          echo "OUTPUT FILES"
-          echo "===================="
-          find .output -maxdepth 5 -type f 2>/dev/null || true
+          echo "=== PUBLIC FILES ==="
+          find .output/public -maxdepth 4 -type f
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -56,7 +46,7 @@ jobs:
       - name: Upload build
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/client
+          path: ./.output/public
 
   deploy:
     needs: build
